@@ -70,7 +70,7 @@ $listC2 = array("name" => "C200", "y" => $totalC2);
 
     <script type="text/javascript">
         $(function() {
-            $('#container').highcharts({
+            $('#pie').highcharts({
                 chart: {
                     plotBackgroundColor: null,
                     plotBorderWidth: null,
@@ -105,69 +105,14 @@ $listC2 = array("name" => "C200", "y" => $totalC2);
 
                         <?php
 
-                        echo json_encode($listA1).",\n";
-                        echo json_encode($listA2).",\n";
-                        echo json_encode($listB1).",\n";
-                        echo json_encode($listB2).",\n";
-                        echo json_encode($listC1).",\n";
-                        echo json_encode($listC2).",\n";
-                        
-                        /*
-                        echo "var listA2 = []\n";
-                        echo "var listB1 = []\n";
-                        echo "var listB2 = []\n";
-                        echo "var listC1 = []\n";
-                        echo "var listC2 = []\n";
-                        */
-
-                        // echo $A1;
-                        // echo $A2;
-                        // echo $B1;
-                        // echo $B2;
-                        // echo $C1;
-                        // echo $C2;
+                        echo json_encode($listA1) . ",\n";
+                        echo json_encode($listA2) . ",\n";
+                        echo json_encode($listB1) . ",\n";
+                        echo json_encode($listB2) . ",\n";
+                        echo json_encode($listC1) . ",\n";
+                        echo json_encode($listC2) . ",\n";
 
                         ?>
-                        
-
-                        /*
-                        <?php 
-                        while($row = mysqli_fetch_array($con)){
-                            echo "['".$row["grupo"]."',".$row["id_alumno"]."],";
-                        }
-                        ?>
-                        */
-
-                        /*
-                        {
-                            name: 'Chrome',
-                            y: 61.41
-                        }, {
-                            name: 'Internet Explorer',
-                            y: 11.84
-                        }, {
-                            name: 'Firefox',
-                            y: 10.85
-                        }, {
-                            name: 'Edge',
-                            y: 4.67
-                        }, {
-                            name: 'Safari',
-                            y: 4.18
-                        }, {
-                            name: 'Sogou Explorer',
-                            y: 1.64
-                        }, {
-                            name: 'Opera',
-                            y: 1.6
-                        }, {
-                            name: 'QQ',
-                            y: 1.2
-                        }, {
-                            name: 'Other',
-                            y: 2.61
-                        },
-                        */
 
                     ]
                 }]
@@ -175,6 +120,298 @@ $listC2 = array("name" => "C200", "y" => $totalC2);
             <?php
             // echo "console.log(listA1);";
             ?>
+        });
+    </script>
+
+    <!-- -------------------------------------------------------- COLUMN CHART ------------------------------------------------------- -->
+    <?php
+
+    $listaCarreras = [];
+    $resCarreras = $conexion->query("SELECT COUNT(id_alumno) as numAlumnos, carrera FROM `alumnos` GROUP BY carrera");
+    while ($row = $resCarreras->fetch_array(MYSQLI_BOTH)) {
+        $listaCarreras[] = array("name"=>$row["carrera"], "y"=> intval($row["numAlumnos"]));
+    }
+
+    ?>
+
+    <script>
+        $(function() {
+            $('#columns').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Browser market shares. January, 2018'
+                },
+                subtitle: {
+                    text: 'Click the columns to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
+                },
+                accessibility: {
+                    announceNewData: {
+                        enabled: true
+                    }
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total percent market share'
+                    }
+
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y}'
+                        }
+                    }
+                },
+
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b><br/>'
+                },
+
+                series: [{
+                    name: "Carreras",
+                    colorByPoint: true,
+                    
+                        <?php
+                        echo "data:".json_encode($listaCarreras) . "\n,";
+                        ?>
+                    
+                }],
+                drilldown: {
+                    breadcrumbs: {
+                        position: {
+                            align: 'right'
+                        }
+                    },
+                    series: [{
+                            name: "Chrome",
+                            id: "Chrome",
+                            data: [
+                                [
+                                    "v65.0",
+                                    0.1
+                                ],
+                                [
+                                    "v64.0",
+                                    1.3
+                                ],
+                                [
+                                    "v63.0",
+                                    53.02
+                                ],
+                                [
+                                    "v62.0",
+                                    1.4
+                                ],
+                                [
+                                    "v61.0",
+                                    0.88
+                                ],
+                                [
+                                    "v60.0",
+                                    0.56
+                                ],
+                                [
+                                    "v59.0",
+                                    0.45
+                                ],
+                                [
+                                    "v58.0",
+                                    0.49
+                                ],
+                                [
+                                    "v57.0",
+                                    0.32
+                                ],
+                                [
+                                    "v56.0",
+                                    0.29
+                                ],
+                                [
+                                    "v55.0",
+                                    0.79
+                                ],
+                                [
+                                    "v54.0",
+                                    0.18
+                                ],
+                                [
+                                    "v51.0",
+                                    0.13
+                                ],
+                                [
+                                    "v49.0",
+                                    2.16
+                                ],
+                                [
+                                    "v48.0",
+                                    0.13
+                                ],
+                                [
+                                    "v47.0",
+                                    0.11
+                                ],
+                                [
+                                    "v43.0",
+                                    0.17
+                                ],
+                                [
+                                    "v29.0",
+                                    0.26
+                                ]
+                            ]
+                        },
+                        {
+                            name: "Firefox",
+                            id: "Firefox",
+                            data: [
+                                [
+                                    "v58.0",
+                                    1.02
+                                ],
+                                [
+                                    "v57.0",
+                                    7.36
+                                ],
+                                [
+                                    "v56.0",
+                                    0.35
+                                ],
+                                [
+                                    "v55.0",
+                                    0.11
+                                ],
+                                [
+                                    "v54.0",
+                                    0.1
+                                ],
+                                [
+                                    "v52.0",
+                                    0.95
+                                ],
+                                [
+                                    "v51.0",
+                                    0.15
+                                ],
+                                [
+                                    "v50.0",
+                                    0.1
+                                ],
+                                [
+                                    "v48.0",
+                                    0.31
+                                ],
+                                [
+                                    "v47.0",
+                                    0.12
+                                ]
+                            ]
+                        },
+                        {
+                            name: "Internet Explorer",
+                            id: "Internet Explorer",
+                            data: [
+                                [
+                                    "v11.0",
+                                    6.2
+                                ],
+                                [
+                                    "v10.0",
+                                    0.29
+                                ],
+                                [
+                                    "v9.0",
+                                    0.27
+                                ],
+                                [
+                                    "v8.0",
+                                    0.47
+                                ]
+                            ]
+                        },
+                        {
+                            name: "Safari",
+                            id: "Safari",
+                            data: [
+                                [
+                                    "v11.0",
+                                    3.39
+                                ],
+                                [
+                                    "v10.1",
+                                    0.96
+                                ],
+                                [
+                                    "v10.0",
+                                    0.36
+                                ],
+                                [
+                                    "v9.1",
+                                    0.54
+                                ],
+                                [
+                                    "v9.0",
+                                    0.13
+                                ],
+                                [
+                                    "v5.1",
+                                    0.2
+                                ]
+                            ]
+                        },
+                        {
+                            name: "Edge",
+                            id: "Edge",
+                            data: [
+                                [
+                                    "v16",
+                                    2.6
+                                ],
+                                [
+                                    "v15",
+                                    0.92
+                                ],
+                                [
+                                    "v14",
+                                    0.4
+                                ],
+                                [
+                                    "v13",
+                                    0.1
+                                ]
+                            ]
+                        },
+                        {
+                            name: "Opera",
+                            id: "Opera",
+                            data: [
+                                [
+                                    "v50.0",
+                                    0.96
+                                ],
+                                [
+                                    "v49.0",
+                                    0.82
+                                ],
+                                [
+                                    "v12.1",
+                                    0.14
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            });
         });
     </script>
 
@@ -189,11 +426,18 @@ $listC2 = array("name" => "C200", "y" => $totalC2);
         </div>
 
         <figure class="highcharts-figure">
-            <div id="container"></div>
+            <div id="pie"></div>
             <p class="highcharts-description">
                 Pie charts are very popular for showing a compact overview of a
                 composition or comparison. While they can be harder to read than
                 column charts, they remain a popular choice for small datasets.
+            </p>
+        </figure>
+
+        <figure class="highcharts-figure">
+            <div id="columns"></div>
+            <p class="highcharts-description">
+                Grafico de columnas
             </p>
         </figure>
 
